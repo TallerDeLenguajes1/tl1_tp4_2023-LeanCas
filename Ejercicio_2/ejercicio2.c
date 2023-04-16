@@ -18,6 +18,8 @@ void realizadas (tarea **lista, int longitud,tarea **realizadas);
 
 void mostrar (tarea **lista, int longitud);
 
+void buscarTarea (tarea **lista, int longitud);
+
 int main (){
 	
 	int cant_Tareas;
@@ -148,4 +150,26 @@ void mostrar (tarea **lista, int longitud){
 	
 	}
 	
+}
+
+void buscarTarea (tarea **lista, int longitud){
+	
+	printf("\nIngrese la id de la tarea buscada : ");
+	
+	scanf("%d",&idTarea);
+	
+	if(lista[idTarea] != NULL){
+		
+		printf("\n\n===== TAREA %d =====",lista[idTarea]->TareaID);
+			
+		printf("\nDescripcion : %s",lista[idTarea]->Descripcion);
+			
+		printf("\nDuracion : %d",lista[idTarea]->Duracion);
+			
+	}else {
+		
+		printf("\nLa id de la tarea no existe ");
+	}
+	
+		
 }
