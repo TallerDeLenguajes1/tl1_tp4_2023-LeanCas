@@ -52,7 +52,9 @@ int main (){
 	
 	mostrar(lista_Tareas,cant_Tareas);
 	
-	buscarTarea (lista_Tareas,cant_Tareas);
+	buscarTareaPorId(lista_Tareas,cant_Tareas);
+	
+	buscarTareaPorPalabra(lista_Tareas,cant_Tareas);
 	
 	return 0;
 }
@@ -158,7 +160,6 @@ void mostrar (tarea **lista, int longitud){
 }
 
 void buscarTareaPorPalabra (tarea **lista, int longitud){
-	
 
 	int i,seguir = 1;
 	
@@ -207,17 +208,20 @@ void buscarTareaPorId (tarea **lista, int longitud){
 	
 	scanf("%d",&idTarea);
 	
-	if(lista[idTarea] != NULL){
+	idTarea++;
+	
+	if(lista[idTarea] == NULL){
 		
+		printf("\nLa id de la tarea no existe ");
+			
+	}else {
+				
 		printf("\n\n===== TAREA %d =====",lista[idTarea]->TareaID);
 			
 		printf("\nDescripcion : %s",lista[idTarea]->Descripcion);
 			
 		printf("\nDuracion : %d",lista[idTarea]->Duracion);
 			
-	}else {
-		
-		printf("\nLa id de la tarea no existe ");
 	}
 	
 }
