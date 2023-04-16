@@ -18,6 +18,8 @@ void realizadas (tarea **lista, int longitud,tarea **realizadas);
 
 void mostrar (tarea **lista, int longitud);
 
+void buscarTarea (tarea **lista, int longitud);
+
 int main (){
 	
 	int cant_Tareas;
@@ -46,6 +48,7 @@ int main (){
 	
 	mostrar(lista_Tareas,cant_Tareas);
 	
+	buscarTarea (lista_Tareas,cant_Tareas);
 	
 	return 0;
 }
@@ -147,5 +150,47 @@ void mostrar (tarea **lista, int longitud){
 		}   
 	
 	}
+	
+}
+
+void buscarTarea (tarea **lista, int longitud){
+	
+	int i,seguir = 1;
+	
+	char palabraClave[20];
+	
+	char *ocurrencia;
+	
+	fflush(stdin);
+	
+	printf("\n\nIngrese la palabra clave que esta buscando en las tareas pendientes : ");
+	
+	gets(palabraClave);
+	
+	for(i=0 ; i<longitud ; i++){  
+	
+		if(lista[i] != NULL && seguir == 1){
+	                	
+			ocurrencia = strstr(lista[i]->Descripcion,palabraClave);
+			
+			if (ocurrencia != NULL){
+				
+				printf("\n===== OCURRENCIA ======");
+				
+				printf("\n\n===== TAREA %d =====",lista[i]->TareaID);
+			
+				printf("\nDescripcion : %s",lista[i]->Descripcion);
+				
+				printf("\nDuracion : %d",lista[i]->Duracion);
+				
+				seguir = 0;
+						
+			}
+			
+		}   
+	
+	}
+	
+	
 	
 }
