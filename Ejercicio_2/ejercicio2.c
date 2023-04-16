@@ -20,6 +20,8 @@ void mostrar (tarea **lista, int longitud);
 
 void buscarTareaPorPalabra (tarea **lista, int longitud);
 
+void buscarTareaPorId (tarea **lista, int longitud);
+
 int main (){
 	
 	int cant_Tareas;
@@ -153,9 +155,9 @@ void mostrar (tarea **lista, int longitud){
 	
 }
 
-void buscarTarea (tarea **lista, int longitud){
+void buscarTareaPorPalabra (tarea **lista, int longitud){
 	
-<<<<<<< HEAD
+
 	int i,seguir = 1;
 	
 	char palabraClave[20];
@@ -191,10 +193,14 @@ void buscarTarea (tarea **lista, int longitud){
 		}   
 	
 	}
+
+}
+		
+
+void buscarTareaPorId (tarea **lista, int longitud){
 	
-	
-	
-=======
+	int i,idTarea;	
+
 	printf("\nIngrese la id de la tarea buscada : ");
 	
 	scanf("%d",&idTarea);
@@ -212,6 +218,4 @@ void buscarTarea (tarea **lista, int longitud){
 		printf("\nLa id de la tarea no existe ");
 	}
 	
-		
->>>>>>> busca-tarea
 }
