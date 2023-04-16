@@ -10,6 +10,8 @@ typedef struct Tarea {
 	int Duracion; // entre 10 – 100
 }tarea;
 
+//DECLARACION DE FUNCIONES
+
 void inicializar (tarea **lista, int longitud);
 
 void cargar (tarea **lista, int longitud);
