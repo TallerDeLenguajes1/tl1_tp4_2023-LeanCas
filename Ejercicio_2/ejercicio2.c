@@ -18,7 +18,7 @@ void realizadas (tarea **lista, int longitud,tarea **realizadas);
 
 void mostrar (tarea **lista, int longitud);
 
-void buscarTarea (tarea **lista, int longitud);
+void buscarTareaPorId (tarea **lista, int longitud);
 
 int main (){
 	
@@ -152,7 +152,7 @@ void mostrar (tarea **lista, int longitud){
 	
 }
 
-void buscarTarea (tarea **lista, int longitud){
+void buscarTareaPorId (tarea **lista, int longitud){
 	
 	printf("\nIngrese la id de la tarea buscada : ");
 	
