@@ -4,106 +4,172 @@
 #include<time.h>
 
 
-typedef struct Tarea {
-	int TareaID; //Numerado en ciclo iterativo
+typedef struct {
+	int TareaID; 
 	char *Descripcion;
-	int Duracion; // entre 10 – 100
-}tarea;
+	int Duracion;
+}Tarea;
 
-//DECLARACION DE FUNCIONES
+struct Nodo{
+	Tarea T;
+	struct Nodo *Siguiente;
+};
 
-void inicializar (tarea **lista, int longitud);
+typedef struct Nodo* lista;
 
-void cargar (tarea **lista, int longitud);
 
-void realizadas (tarea **lista, int longitud,tarea **realizadas);
+lista inicializar ();
 
-void mostrar (tarea **lista, int longitud);
+lista insertaAlFinal(lista L,lista nuevo);
 
-void buscarTareaPorPalabra (tarea **lista, int longitud);
+lista cargar (lista L);
 
-void buscarTareaPorId (tarea **lista, int longitud);
+void mostrar (lista L);
+
+void buscarTarea (lista L);
+
+
+
+
+
 
 int main (){
 	
-	int cant_Tareas;
+	lista pendientes, realizadas;
+			
+	pendientes = inicializar();
 	
-	tarea **lista_Tareas, **lista_realizadas;
+	pendientes = cargar(pendientes);
 	
-	printf("\nIngrese cuantas tareas se deben realizar : ");
+	mostrar(pendientes);
 	
-	scanf("%d",&cant_Tareas);
+	buscarTarea(pendientes);
 	
-	lista_Tareas = (tarea**) malloc (sizeof(tarea*) * cant_Tareas);
 	
-	lista_realizadas = (tarea**) malloc (sizeof(tarea*) * cant_Tareas);
 	
-	inicializar(lista_Tareas,cant_Tareas);
 	
-	cargar(lista_Tareas,cant_Tareas);
 	
-	realizadas(lista_Tareas,cant_Tareas,lista_realizadas);
 	
-	printf("\n\n\t===== TAREAS REALIZADAS =====");
 	
-	mostrar(lista_realizadas,cant_Tareas);
 	
-	printf("\n\n\t===== TAREAS PENDIENTES =====");
-	
-	mostrar(lista_Tareas,cant_Tareas);
-	
-	buscarTareaPorId(lista_Tareas,cant_Tareas);
-	
-	buscarTareaPorPalabra(lista_Tareas,cant_Tareas);
 	
 	return 0;
+	
 }
 
-void inicializar (tarea **lista, int longitud){
+lista inicializar (){
 	
-	int i;
-	
-	for (i=0 ; i<longitud ; i++){
-		
-		lista[i] = NULL;
-		
-	}
+	return NULL;
 		
 }
 
-void cargar (tarea **lista, int longitud){
-	
-	int i;
-	
+lista insertaAlFinal(lista L, lista nuevo) {
+	nuevo->Siguiente = NULL;
+    if (L == NULL) {
+        L = nuevo;
+    } else {
+        lista aux = L;
+        while (aux->Siguiente != NULL) {
+            aux = aux->Siguiente;
+        }
+        aux->Siguiente = nuevo;
+    }
+    return L;
+}
+
+lista cargar (lista L){
+		
 	char descripAux[100];
+    lista nuevo;
+	int i=0, bandera=1;
 	
-	
-	for(i=0 ; i<longitud ; i++){
+	while(bandera == 1){
 		
 		fflush(stdin);
 		
-		lista[i] = (tarea*) malloc(sizeof(tarea));
-
-		srand(time(NULL));
+		nuevo = (lista) malloc (sizeof(struct Nodo));
 		
-		lista[i]->TareaID = i+1;
+		nuevo->T.TareaID = i++;
 		
-		printf("\n\nIngresar la descripcion de la tarea %d : ",i+1);
-		
+		printf("\n\nIngresar la descripcion de la tarea %d : ",i);
+	
 		gets(descripAux);
 		
-		lista[i]->Descripcion = (char*) malloc (sizeof(char) * strlen(descripAux));
+		nuevo->T.Descripcion = (char*) malloc (sizeof(char) * (strlen(descripAux) + 1));
 		
-		strcpy(lista[i]->Descripcion,descripAux);
+		strcpy(nuevo->T.Descripcion,descripAux);
 		
-		lista[i]->Duracion = rand() % 91 + 10;
+		nuevo->T.Duracion = rand() % 91 + 10;
+		
+		L=insertaAlFinal(L,nuevo);
+		
+		printf("\nDesea cargar otra tarea ? \n1)-SI\n2)-NO\n>>>>");
+		
+		scanf("%d",&bandera);
 		
 	}
-		
+	
+	return L;
+			
 }
 
 
-void realizadas (tarea **lista, int longitud,tarea **realizadas){
+void mostrar (lista L){
+	
+	lista aux = L;
+	               
+	while(aux != NULL){
+	    	
+		printf("\n\n===== TAREA %d =====",aux->T.TareaID);
+                                                        
+		printf("\nDescripcion : %s",aux->T.Descripcion);
+				
+		printf("\nDuracion : %d",aux->T.Duracion);
+		
+		aux = aux->Siguiente;
+		
+	}
+			
+	
+}
+
+void buscarTarea (lista L){
+	
+	int idTarea;
+	
+	lista aux = L;
+	
+	printf("\n===== BUSCAR TAREA =====");
+	
+	printf("\nIngrese el ID de la tarea : ");
+	
+	scanf("%d",&idTarea);
+	
+	while(aux != NULL){
+		
+               
+		if(aux->T.TareaID == idTarea){
+	    	
+			printf("\n\n===== TAREA %d =====",aux->T.TareaID);
+	                                                        
+			printf("\nDescripcion : %s",aux->T.Descripcion);
+					
+			printf("\nDuracion : %d",aux->T.Duracion);
+			
+		}
+		
+		aux = aux->Siguiente;
+			
+	}
+	
+
+	
+	
+}
+
+
+
+/*void realizadas (tarea **lista, int longitud,tarea **realizadas){
 	
 	int i,eleccion;
 	
@@ -159,69 +225,26 @@ void mostrar (tarea **lista, int longitud){
 	
 }
 
-void buscarTareaPorPalabra (tarea **lista, int longitud){
-
-	int i,seguir = 1;
-	
-	char palabraClave[20];
-	
-	char *ocurrencia;
-	
-	fflush(stdin);
-	
-	printf("\n\nIngrese la palabra clave que esta buscando en las tareas pendientes : ");
-	
-	gets(palabraClave);
-	
-	for(i=0 ; i<longitud ; i++){  
-	
-		if(lista[i] != NULL && seguir == 1){
-	                	
-			ocurrencia = strstr(lista[i]->Descripcion,palabraClave);
-			
-			if (ocurrencia != NULL){
-				
-				printf("\n===== OCURRENCIA ======");
-				
-				printf("\n\n===== TAREA %d =====",lista[i]->TareaID);
-			
-				printf("\nDescripcion : %s",lista[i]->Descripcion);
-				
-				printf("\nDuracion : %d",lista[i]->Duracion);
-				
-				seguir = 0;
-						
-			}
-			
-		}   
-	
-	}
-
-}
-		
-
 void buscarTareaPorId (tarea **lista, int longitud){
 	
-	int i,idTarea;	
-
+	int idTarea;
+	 
 	printf("\nIngrese la id de la tarea buscada : ");
 	
 	scanf("%d",&idTarea);
 	
-	idTarea++;
-	
-	if(lista[idTarea] == NULL){
+	if(lista[idTarea] != NULL){
 		
-		printf("\nLa id de la tarea no existe ");
-			
-	}else {
-				
 		printf("\n\n===== TAREA %d =====",lista[idTarea]->TareaID);
 			
 		printf("\nDescripcion : %s",lista[idTarea]->Descripcion);
 			
 		printf("\nDuracion : %d",lista[idTarea]->Duracion);
 			
+	}else {
+		
+		printf("\nLa id de la tarea no existe ");
 	}
 	
-}
+		
+}*/
