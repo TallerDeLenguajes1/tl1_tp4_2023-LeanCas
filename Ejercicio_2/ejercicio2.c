@@ -191,17 +191,24 @@ void buscarTarea (Tnodo* L){
 }
 
 
-
 void realizadas (Tnodo** Lpendientes, Tnodo** Lrealizadas){
 	
-	int band;
+	int opcion;
 	
 	Tnodo* auxPend = *Lpendientes;
 	
+	
 	Tnodo* auxReal = *Lrealizadas;
 	
-	Tnodo* anterior = auxPend;
-	               
+	Tnodo* anterior = NULL;
+    //recorrer realizadas para llegar al final
+
+	while(auxReal != NULL){
+
+		auxReal = auxReal->Siguiente;
+
+	}
+
 	while(auxPend != NULL){
 	    	
 		printf("\n\n===== TAREA %d =====",auxPend->T.TareaID);
@@ -215,25 +222,39 @@ void realizadas (Tnodo** Lpendientes, Tnodo** Lrealizadas){
 		
 		scanf("%d",&opcion);
 		
-		
-		
-
-		
-		
 		if(opcion == 1){
+            //desenganchar nodo
+            if (anterior==NULL){ 
+
+				anterior=auxPend->Siguiente;
+
+			}else{
+
+				anterior->Siguiente=auxPend->Siguiente;
+
+			}
+
+                
+            //mover
 						
-			auxReal = auxPend;
-			
+			auxReal->Siguiente = auxPend;
+			//Para que me pare en el nodo seguiente
 			auxPend = auxPend->Siguiente;
-			
-			auxReal->Siguiente = NULL;
-			
+			//para que real se pare en el ultimo nodo agregado
+			auxReal=auxReal->Siguiente;
+
+			auxReal->Siguiente=NULL;
+			  
 		}
-		
-		anterior = auxPend;
-		
-		auxPend = auxPend->Siguiente;
-	
+        else{
+
+			//PARA NO PERDER EL NODO "ANTERIOR"
+			anterior=auxPend;
+
+			auxPend = auxPend->Siguiente;
+
+        }
+        
 	}
 		
 }
